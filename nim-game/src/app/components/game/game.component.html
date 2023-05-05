@@ -1,0 +1,25 @@
+<div class="game">
+  <p>Remaining Sticks: {{ sticks.length }}</p>
+
+  <div class="stick-container">
+    <ng-container *ngFor="let stick of sticks">
+      <app-sticks></app-sticks>
+    </ng-container>
+  </div>
+
+  <p>{{ winnerMessage }}</p>
+
+  <ng-container *ngIf="!winnerMessage; else tryAgain">
+    <p *ngIf="isPlayerTurn">Your turn:</p>
+    <p *ngIf="!isPlayerTurn">Computer's turn...</p>
+
+    <button *ngIf="isPlayerTurn" (click)="playerMove(1)">Take 1 Stick</button>
+    <button *ngIf="isPlayerTurn" (click)="playerMove(2)">Take 2 Sticks</button>
+    <button *ngIf="isPlayerTurn" (click)="playerMove(3)">Take 3 Sticks</button>
+  </ng-container>
+
+  <ng-template #tryAgain>
+    <button (click)="startGame()">Try again!</button>
+  </ng-template>
+
+</div>
