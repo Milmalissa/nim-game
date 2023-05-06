@@ -13,13 +13,13 @@
     <p *ngIf="isPlayerTurn">Your turn:</p>
     <p *ngIf="!isPlayerTurn">Computer's turn...</p>
 
-    <button *ngIf="isPlayerTurn" (click)="playerMove(1)">Take 1 Stick</button>
-    <button *ngIf="isPlayerTurn" (click)="playerMove(2)">Take 2 Sticks</button>
-    <button *ngIf="isPlayerTurn" (click)="playerMove(3)">Take 3 Sticks</button>
+    <button *ngIf="isPlayerTurn" (click)="playerMove(1)" class="btn btn-outline-primary">Take 1 Stick</button>
+    <button *ngIf="isPlayerTurn" [disabled]="sticks.length <=2" (click)="playerMove(2)" class="btn btn-outline-primary game-stick-btn">Take 2 Sticks</button>
+    <button *ngIf="isPlayerTurn" [disabled]="sticks.length <=3" (click)="playerMove(3)" class="btn btn-outline-primary game-stick-btn">Take 3 Sticks</button>
   </ng-container>
 
   <ng-template #tryAgain>
-    <button (click)="startGame()">Try again!</button>
+    <button (click)="startGame()" class="btn btn-primary">Try again!</button>
   </ng-template>
 
 </div>
