@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Player } from '../models/player';
 import { Game } from '../models/game';
 import { BehaviorSubject}  from 'rxjs';
+import {Stick} from '../models/stick';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class GameLogicService {
 
   constructor() { }
 
-  public getSticks(): string[] {
+  public getSticks(): Stick[] {
     return this.game.sticks;
   }
 
@@ -26,10 +27,11 @@ export class GameLogicService {
     this.message$.next('');
   }
 
-  private initializeSticks(stickCount: number): string[] {
-    const gameSticks: string[] = [];
+  private initializeSticks(stickCount: number): Stick[] {
+    const gameSticks: Stick[] = [];
     for (let i = 0; i < stickCount; i++) {
-      gameSticks.push('');
+      const newStick: Stick = {imgSrc: '../../../assets/images/Stick.png'};
+      gameSticks.push(newStick);
     }
     return gameSticks;
   }

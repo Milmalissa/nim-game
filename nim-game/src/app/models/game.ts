@@ -1,10 +1,11 @@
 import { Player } from './player';
+import {Stick} from './stick';
 
 export class Game {
   currentPlayer: Player;
-  sticks: string[];
+  sticks: Stick[];
 
-  constructor(currentPlayer: Player, sticks: string[]) {
+  constructor(currentPlayer: Player, sticks: Stick[]) {
     this.currentPlayer = currentPlayer;
     this.sticks = sticks;
   }

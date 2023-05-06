@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { SticksComponent } from './sticks.component';
+import { Stick } from '../../models/stick';
 
 describe('SticksComponent', () => {
   let component: SticksComponent;
@@ -10,16 +10,25 @@ describe('SticksComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ SticksComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SticksComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create the component', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should display the stick image', () => {
+    const stick: Stick = {imgSrc: 'path/to/stick/image.png'};
+    component.stick = stick;
+    fixture.detectChanges();
+
+    const imgElement: HTMLImageElement = fixture.nativeElement.querySelector('img');
+    expect(imgElement.src).toContain(stick.imgSrc);
+  });
+
 });

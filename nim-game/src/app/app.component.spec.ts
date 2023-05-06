@@ -26,6 +26,6 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('nim-game app is running!');
+    expect(compiled.querySelector('.container h2').textContent).toContain('Nim Game');
   });
 });

@@ -1,28 +1,22 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GameLogicService } from '../../services/game-logic.service';
 import { Player } from '../../models/player';
-import { Subscription } from 'rxjs';
-
+import {Stick} from '../../models/stick';
 
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss']
 })
-export class GameComponent implements OnInit, OnDestroy {
-  sticks: string[] = [];
-  winnerMessage = '';
-  isPlayerTurn = false;
-  private subscriptions: Subscription = new Subscription();
+export class GameComponent implements OnInit {
+  public sticks: Stick[] = [];
+  public winnerMessage = '';
+  public isPlayerTurn = false;
 
   constructor(private gameService: GameLogicService) { }
 
   ngOnInit(): void {
     this.startGame();
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
   }
 
   public startGame(): void {
@@ -31,11 +25,9 @@ export class GameComponent implements OnInit, OnDestroy {
     this.gameService.startGame();
     this.isPlayerTurn = this.gameService.getCurrentPlayer() === Player.PLAYER;
 
-    this.subscriptions.add(
-      this.gameService.message$.subscribe(message => {
-        this.winnerMessage = message;
-      })
-    );
+    this.gameService.message$.subscribe(message => {
+      this.winnerMessage = message;
+    });
   }
 
   playerMove(takenSticks: number): void {
