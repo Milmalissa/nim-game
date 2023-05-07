@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Player } from '../models/player';
 import { Game } from '../models/game';
-import { BehaviorSubject}  from 'rxjs';
-import {Stick} from '../models/stick';
+import { BehaviorSubject} from 'rxjs';
+import { Stick } from '../models/stick';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameLogicService {
 
-  public game: Game;
+  private game: Game;
   public message$ = new BehaviorSubject<string>('');
+  private turnHistory: string[] = [];
+
+
 
   constructor() { }
 
@@ -20,6 +23,14 @@ export class GameLogicService {
 
   public getCurrentPlayer(): Player {
     return this.game.currentPlayer;
+  }
+
+  public getTurnHistory(): string[] {
+    return this.turnHistory;
+  }
+
+  public setTurnHistory(history: string[]): void {
+    this.turnHistory = history;
   }
 
   public initializeGame(): void {
@@ -51,6 +62,7 @@ export class GameLogicService {
 
   public playerMove(takenSticks: number): void {
     if (takenSticks > 0 && takenSticks <= this.game.sticks.length && this.game.sticks.length > 1) {
+      this.turnHistory.push('You have taken ' + takenSticks);
       this.turn(takenSticks, Player.PLAYER);
     } else {
       this.message$.next('Computer wins!');
@@ -63,24 +75,25 @@ export class GameLogicService {
     if (takenSticks >= this.game.sticks.length && this.game.sticks.length > 1 && this.game.sticks.length - takenSticks <= 0) {
       this.computerMove();
     } else {
+      this.turnHistory.push('The computer has taken ' + takenSticks);
       this.turn(takenSticks, Player.BOT);
     }
   }
 
   private turn(takenSticks: number, player: Player): void {
-    for (let i = 0; i < takenSticks; i++) {
-      this.game.sticks.pop();
-    }
-
-    if (this.game.sticks.length === 1) {
-      this.message$.next( player + ' wins!');
-    } else {
-      if (player === Player.PLAYER) {
-        this.game.currentPlayer = Player.BOT;
-        this.computerMove();
-      } else {
-        this.game.currentPlayer = Player.PLAYER;
+      for (let i = 0; i < takenSticks; i++) {
+        this.game.sticks.pop();
       }
-    }
+
+      if (this.game.sticks.length === 1) {
+        this.message$.next('Winner: ' + player);
+      } else {
+        if (player === Player.PLAYER) {
+          this.game.currentPlayer = Player.BOT;
+          this.computerMove();
+        } else {
+          this.game.currentPlayer = Player.PLAYER;
+        }
+      }
   }
 }

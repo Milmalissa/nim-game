@@ -36,7 +36,7 @@ describe('GameComponent', () => {
     spyOn(gameService, 'getSticks').and.returnValue([{imgSrc: '../../../assets/images/Stick.png'}, {imgSrc: '../../../assets/images/Stick.png'}]);
     spyOn(gameService, 'startGame');
     spyOn(gameService, 'getCurrentPlayer').and.returnValue(Player.PLAYER);
-
+    spyOn(gameService, 'getTurnHistory').and.returnValue(['Player 1 started the game']);
     component.ngOnInit();
 
     expect(gameService.initializeGame).toHaveBeenCalled();
@@ -45,6 +45,12 @@ describe('GameComponent', () => {
     expect(gameService.getCurrentPlayer).toHaveBeenCalled();
     expect(component.sticks.length).toEqual(2);
     expect(component.isPlayerTurn).toBeTrue();
+    expect(component.history).toEqual(['Player 1 started the game']);
+
+    gameService.message$.next('You wins!');
+    gameService.message$.subscribe(message => {
+      expect(component.winnerMessage).toEqual('You wins!');
+    });
   });
 
   it('should handle player moves', () => {

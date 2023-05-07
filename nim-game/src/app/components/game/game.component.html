@@ -18,6 +18,13 @@
     <button *ngIf="isPlayerTurn" [disabled]="sticks.length <=3" (click)="playerMove(3)" class="btn btn-outline-primary game-stick-btn">Take 3 Sticks</button>
   </ng-container>
 
+  <div class="mt-5">
+    <p class="text-bold">Game turn history:</p>
+    <p *ngFor="let turnInfo of history">
+      {{turnInfo}}
+    </p>
+  </div>
+
   <ng-template #tryAgain>
     <button (click)="startGame()" class="btn btn-primary">Try again!</button>
   </ng-template>

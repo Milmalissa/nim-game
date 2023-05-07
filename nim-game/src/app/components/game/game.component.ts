@@ -12,6 +12,7 @@ export class GameComponent implements OnInit {
   public sticks: Stick[] = [];
   public winnerMessage = '';
   public isPlayerTurn = false;
+  public history: string[] = [];
 
   constructor(private gameService: GameLogicService) { }
 
@@ -20,10 +21,12 @@ export class GameComponent implements OnInit {
   }
 
   public startGame(): void {
+    this.gameService.setTurnHistory([]);
     this.gameService.initializeGame();
     this.sticks = this.gameService.getSticks();
     this.gameService.startGame();
     this.isPlayerTurn = this.gameService.getCurrentPlayer() === Player.PLAYER;
+    this.history = this.gameService.getTurnHistory();
 
     this.gameService.message$.subscribe(message => {
       this.winnerMessage = message;
