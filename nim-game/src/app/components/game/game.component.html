@@ -10,12 +10,12 @@
   <p>{{ winnerMessage }}</p>
 
   <ng-container *ngIf="!winnerMessage; else tryAgain">
-    <p *ngIf="isPlayerTurn">Your turn:</p>
-    <p *ngIf="!isPlayerTurn">Computer's turn...</p>
+    <p *ngIf="gameService.getCurrentPlayer() === 'You'">Your turn:</p>
+    <p *ngIf="gameService.getCurrentPlayer() !== 'You'">Computer's turn...</p>
 
-    <button *ngIf="isPlayerTurn" (click)="playerMove(1)" class="btn btn-outline-primary">Take 1 Stick</button>
-    <button *ngIf="isPlayerTurn" [disabled]="sticks.length <=2" (click)="playerMove(2)" class="btn btn-outline-primary game-stick-btn">Take 2 Sticks</button>
-    <button *ngIf="isPlayerTurn" [disabled]="sticks.length <=3" (click)="playerMove(3)" class="btn btn-outline-primary game-stick-btn">Take 3 Sticks</button>
+    <button *ngIf="gameService.getCurrentPlayer() === 'You'" (click)="playerMove(1)" class="btn btn-outline-primary">Take 1 Stick</button>
+    <button *ngIf="gameService.getCurrentPlayer() === 'You'" [disabled]="sticks.length <=2" (click)="playerMove(2)" class="btn btn-outline-primary game-stick-btn">Take 2 Sticks</button>
+    <button *ngIf="gameService.getCurrentPlayer() === 'You'" [disabled]="sticks.length <=3" (click)="playerMove(3)" class="btn btn-outline-primary game-stick-btn">Take 3 Sticks</button>
   </ng-container>
 
   <div class="mt-5">

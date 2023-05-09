@@ -52,7 +52,7 @@ describe('GameLogicService', () => {
   it('should add the player move to the turn history', () => {
     service.initializeGame();
     service.playerMove(3);
-    expect(service.getTurnHistory().length).toEqual(2);
+    expect(service.getTurnHistory().length).toEqual(1);
     expect(service.getTurnHistory()[0]).toEqual('You have taken 3');
   });
 

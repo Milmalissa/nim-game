@@ -75,8 +75,8 @@ export class GameLogicService {
     if (takenSticks >= this.game.sticks.length && this.game.sticks.length > 1 && this.game.sticks.length - takenSticks <= 0) {
       this.computerMove();
     } else {
-      this.turnHistory.push('The computer has taken ' + takenSticks);
       this.turn(takenSticks, Player.BOT);
+      this.turnHistory.push('The computer has taken ' + takenSticks);
     }
   }
 
@@ -90,7 +90,7 @@ export class GameLogicService {
       } else {
         if (player === Player.PLAYER) {
           this.game.currentPlayer = Player.BOT;
-          this.computerMove();
+          setTimeout(() => this.computerMove(), 1000);
         } else {
           this.game.currentPlayer = Player.PLAYER;
         }
